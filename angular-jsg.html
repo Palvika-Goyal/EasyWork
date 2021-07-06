@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="js/angular.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-1.8.2.min.js"></script>
+
+    <script src="JS/bootstrap.min.js"></script>
+
+<script>
+var varModule = angular.module("ourmodule", []);
+varModule.controller("hitanshuController", function($scope) {
+$scope.fn = "Rajesh **";
+//--------------------
+$scope.fstName; //a variable created in $scope object
+$scope.lstName; //a variable created in $scope object
+$scope.joint;
+$scope.doJoin = function() {
+//using variables from scope object
+$scope.joint = $scope.fstName + " " + $scope.lstName;
+}
+
+$scope.jsonArray = [{
+item: "Mobile",
+price: 15000,
+qty: "2"
+},
+{
+item: "Laptop",
+price: 90000,
+qty: "3"
+},
+{
+item: "Books",
+price: 10000,
+qty: "3"
+},
+{
+item: "Car",
+price: 3500000,
+qty: "3"
+},
+{
+item: "Mobile",
+price: 15000,
+qty: "3"
+},
+{
+item: "Laptop",
+price: 90000,
+qty: "6"
+},
+{
+item: "Books",
+price: 8000,
+qty: "2"
+},
+{
+item: "Car",
+price: 3500000,
+qty: "8"
+}
+];
+
+$scope.doDel=function(item){
+alert(item);
+}
+
+$scope.doSort=function(col){
+$scope.colName=col;
+}
+////-=-=--=-=-=======================
+
+$scope.selObject=$scope.jsonArray[1];
+    $scope.doShow=function(){
+        alert($scope.selObject.price);
+    }
+$scope.showDetails=function(index)
+{
+    $scope.txtdet=$scope.jsonArray[index];
+   // $scope.txtdet="Item: "+$scope.jsonArray[index].item+" Price:"+$scope.jsonArray[index].price;
+}
+});
+</script>
+
+</head>
+<!-- View -->
+
+<body ng-app="ourmodule" ng-controller="hitanshuController">
+
+Name:<input type="text" ng-model="fn"> <br>
+Rep. Name:<input type="text" ng-model="fn">
+<br>
+{{fn}} <!-- Scriptlet -->
+<hr>
+First Name <input type="text" ng-model="fstName">
+<br>
+Last Name: <input type="text" ng-model="lstName">
+<br>
+<input type="button" value="Join" ng-click="doJoin();">
+<br>
+Full Name: <input type="text" ng-model="joint">
+
+
+<hr size="10" color="red">
+<br>
+<center>
+serach <input type="text" ng-model="google.item"> <!-- .colName -->
+<table width="600" border="1">
+<tr bgcolor="gray">
+<th>Sr. No.</th>
+<th ng-click="doSort('item');">Item</th>
+<th ng-click="doSort('price');">Price</th>
+<th ng-click="doSort('qty');">qty</th>
+</tr>
+<tr ng-repeat="obj in jsonArray |orderBy:colName| filter:google">
+<td>
+{{$index+1}}
+</td>
+<td>
+{{obj.item}}
+</td>
+<td>
+{{obj.price}}
+</td>
+<td>
+{{obj.qty}}
+</td>
+<td>
+<input value="Delete" type="button" ng-click="doDel(obj.item);">
+</td>
+
+</tr>
+</table>
+<hr>
+<hr>
+<hr>
+select :<select ng-change="doShow();" ng-model="selObject" ng-options="obj.item for obj in jsonArray"></select>
+<hr>
+<hr>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" ng-repeat="obj in jsonArray">
+           <div class="card" style="width: 18rem;">
+  <img src="pics/bg2.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{obj.item}}</h5>
+    <p class="card-text">{{obj.price}}</p>
+    <p class="card-text">{{obj.qty}}</p>
+    <p class="card-text">{{obj.price*obj.qty}}</p>
+    <div ng-click="showDetails($index)"class="btn btn-primary" data-toggle="modal" data-target="#modalDetails">Go somewhere
+  </div>
+               </div></div>
+            
+        </div>
+    </div>
+</div>
+</center>
+  <div class="modal fade" tabindex="-1" role="dialog" id="modalDetails">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title">Detalis</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                          Item:  {{txtdet.item}}
+        <br>                   Price: {{txtdet.price}}
+                            
+                        </div>
+                       
+                    </form></div></div></div></div>
+</body></html> 

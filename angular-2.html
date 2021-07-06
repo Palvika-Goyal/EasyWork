@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+
+
+<script src="js/angular.min.js"></script>
+
+<script>
+var varModule = angular.module("ourmodule", []);
+varModule.controller("hitanshuController", function($scope,$http) {
+
+
+$scope.jsonArray;//just declared
+$scope.jsonArraySelected;//just declared
+
+$scope.doFetchAll=function(){
+
+$http.get("JSON-fetch-all.php").then(okFx,notOkFx);
+function okFx(response)
+{
+alert(JSON.stringify(response.data));//data contains jsonArray-shows jsonArray
+$scope.jsonArray=response.data;//point, from local to global
+$scope.selObject = $scope.jsonArray[1];//point
+}
+function notOkFx(response)
+{
+alert(response.data);//shows error
+}
+}
+
+
+
+//=-=-=-=-=-=-= FIll In Combo------
+
+
+
+//=-=-=-=-=-=-=-=-=
+//works on button click
+$scope.doFetchSelected=function()
+{
+//alert($scope.selObject.mobile);
+$http.get("JSON-fetch-selected.php?mobile="+$scope.selObject.mobile).then(okFx,notOkFx);
+function okFx(response)
+{
+alert(JSON.stringify(response.data));//data contains jsonArray-shows jsonArray
+$scope.jsonArraySelected=response.data;
+}
+function notOkFx(response)
+{
+alert(response.data);//shows error
+}
+
+}
+
+});
+
+</script>
+
+</head>
+<!-- View -->
+
+<body ng-app="ourmodule" ng-controller="hitanshuController" ng-init="doFetchAll();">
+<center>
+
+
+
+<h3>User ids:</h3>
+Select Userid:
+<select  ng-model="selObject" ng-options="obj.mobile for obj in jsonArray"></select>
+<div class="btn btn-primary" ng-click="doFetchSelected();">show all</div>
+
+</center>
+<hr>
+<hr>
+
+<div class="container">
+<div class="row">
+<div class="col-md-3" ng-repeat="obj in jsonArraySelected">
+<div class="card" >
+<img src="uploads/{{obj.picname}}" height="100" class="card-img-top" alt="...">
+<div class="card-body">
+<h5 class="card-title">User id: {{obj.uid}}</h5>
+<p class="card-text">Password: {{obj.pwd}}</p>
+<p class="card-text">Date of signup: {{obj.dos}}</p>
+<p class="card-text">Mobile: {{obj.mobile}}</p>
+<div  ng-click="showDetails($index);" class="btn btn-primary">Details/Add to Cart</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</body>
+
+</html>

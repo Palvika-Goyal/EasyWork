@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="JS/angular.min.js">
+    </script>
+<script>
+    var varModule=angular.module("mymodule",[]);
+    varModule.controller("mycontroller",function($scope){
+        $scope.c;
+        $scope.w;
+        $scope.j;
+        $scope.total;
+        $scope.per;
+        $scope.grade;
+        $scope.doTotal=function()
+        {
+            $scope.total=parseFloat($scope.c)+parseFloat($scope.w)+parseFloat($scope.j);
+            
+        }
+        $scope.doPer=function()
+        {
+            $scope.per=$scope.total/3;
+        }
+        $scope.doGrade=function()
+        {
+            $scope.per;
+            $scope.grade;
+            if($scope.per>=90)
+                $scope.grade='A';
+            else if($scope.per>=80)
+                $scope.grade='B';
+            else if($scope.per>=70)
+                $scope.grade='C';
+            else
+                $scope.grade='F';
+                
+        }
+        $scope.doDis=function(){
+        $scope.txtDis;
+        $scope.discount;
+        $scope.txtDis=$scope.discount;
+        }
+        $scope.doBook=function(){
+            $scope.book1;
+            $scope.book2;
+            $scope.book3;
+            $scope.txtBook;
+            if($scope.book1)
+                $scope.txtBook=$scope.book1+",";
+              if($scope.book2==true)
+                $scope.txtBook=$scope.txtBook+$scope.book2+",";
+              if($scope.book3==true)
+                $scope.txtBook=$scope.txtBook+$scope.book3;
+        }
+    })
+    
+    </script>
+
+</head>
+<body ng-app="mymodule" ng-controller="mycontroller">
+   <h3>Marks Card</h3>
+   C++:
+   <input type="text" ng-model="c">
+   <br>
+   Web:
+   <input type="text" ng-model="w">
+   <br>
+   Java:
+   <input type="text" ng-model="j">
+   <br> 
+   <input type="button" value="Total" ng-click="doTotal();">
+   <input type="button" value="Per" ng-click="doPer();">
+   <input type="button" value="Grade" ng-click="doGrade();">
+   <input type="button" value="Radio" ng-click="doDis();">
+   <input type="button" value="Check" ng-click="doBook();">
+   
+   <br>Total
+   <input type="text" ng-model="total">
+   <br>
+   Percentage:
+   <input type="text" ng-model="per">
+   <br>
+   Grade
+   <input type="text" ng-model="grade">
+   <br>
+   discount:
+    <input type="radio" value="10"  ng-model="discount">10%
+    <input type="radio" value="20"  ng-model="discount">20%
+    <input type="text" ng-model="txtDis">
+    <br>
+    <br>
+    <br>
+    Books:
+    <input type="checkbox" multiple value="book1"   ng-true-value="book1" ng-false-value="bookkk">Book1
+    <input type="checkbox" multiple value="book2" ng-checked="ischecked" ng-model="book2">Book2
+    <input type="checkbox" multiple value="book3" ng-checked="ischecked" ng-model="book3">Book3
+        <input type="text" ng-model="txtBook">
+
+</body>
+</html>
